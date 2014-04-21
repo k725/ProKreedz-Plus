@@ -2,16 +2,17 @@
 	require_once(dirname(__FILE__) . '/lib/config.php');
 	require_once(dirname(__FILE__) . '/lib/function.php');
 
-	function Html_Body() {
+	function Html_Body()
+	{
 		$start = isset($_GET['s']) ? $_GET['s'] : 0;
 		$pdo = new PDO(MySQL_PDO_Connect(), MySQL_Base::UserName, MySQL_Base::PassWord);
 		
 		foreach ($pdo->query('SELECT DISTINCT ' . MySQL_Column_Pro::MapName . ' FROM ' . MySQL_Base::RankPro) as $row) {
-			$tab1[]	= $row[MySQL_Column_Pro::MapName];
+			$tab1[] = $row[MySQL_Column_Pro::MapName];
 		}
 
 		foreach ($pdo->query('SELECT DISTINCT ' . MySQL_Column_Noob::MapName . ' FROM ' . MySQL_Base::RankNoob) as $row) {
-			$tab2[]	= $row[MySQL_Column_Noob::MapName];
+			$tab2[] = $row[MySQL_Column_Noob::MapName];
 		}
 		
 		for ($i = 0; $i < count($tab2); $i++) {
@@ -22,9 +23,7 @@
 		
 		sort($tab1);
 
-		$map_count = count($tab1);
-		$tmp       = menu('map', $map_count);
-
+		$tmp = menu('map', null);
 		$tmp .= '					<table class="table table-condensed table-hover">
 						<thead><tr><th>#</th><th>Maps</th><th>Name</th><th>Time</th><th>Date</th><th>Weapon</th><th>Pro15</th><th>Nub15</th></tr></thead>
 						<tbody>' . "\n";
@@ -43,18 +42,18 @@
 				if (count($id) > 0) {
 					$iMin      = floor(floor($id['time']) / 60);
 					$iSec      = $id['time'] - (60 * $iMin);
-					$r_date    = $id['date'];
 					$r_mapname = $id['mapname'];
-					$r_authid  = $id['authid'];
-					$r_weapon  = $id['weapon'];
-					$r_name    = $id['name'];
 					$r_flag    = strtolower(empty($id['country']) ? 'err' : $id['country']);
+					$r_authid  = $id['authid'];
+					$r_name    = h($id['name']);
 					$r_time    = sprintf('%02d:%s%.2f', $iMin, $iSec < 10 ? '0': '', $iSec);
+					$r_date    = $id['date'];
+					$r_weapon  = $id['weapon'];
 
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
 								<td><a href="pronub15.php?&map=' . $r_mapname . '">' . $r_mapname . '</a></td>
-								<td><img src="./img/flags/' . $r_flag . '.gif"> <a href="player.php?authid=' . $r_authid . '">' . h($r_name) . '</a></td>
+								<td><img src="./img/flags/' . $r_flag . '.gif"> <a href="player.php?authid=' . $r_authid . '">' . $r_name . '</a></td>
 								<td>' . $r_time . '</td>
 								<td>' . $r_date . '</td>
 								<td><img src="./img/weapons/' . $r_weapon . '.gif"></td>
@@ -69,13 +68,13 @@
 
 					$iMin      = floor(floor($id['time']) / 60);
 					$iSec      = $id['time'] - (60 * $iMin);
-					$r_date    = $id['date'];
 					$r_mapname = $id['mapname'];
-					$r_authid  = $id['authid'];
-					$r_weapon  = $id['weapon'];
-					$r_name    = $id['name'];
 					$r_flag    = strtolower(empty($id['country']) ? 'err' : $id['country']);
+					$r_authid  = $id['authid'];
+					$r_name    = $id['name'];
 					$r_time    = sprintf('%02d:%s%.2f', $iMin, $iSec < 10 ? '0': '', $iSec);
+					$r_date    = $id['date'];
+					$r_weapon  = $id['weapon'];
 
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
@@ -93,16 +92,17 @@
 
 		$tmp .= '						</tbody>
 					</table>' . "\n";
-		$tmp .= PageIndex ($map_count, $start);
+		$tmp .= PageIndex (count($tab1), $start);
 		$pdo  = null;
 
 		return $tmp;
 	}
 
-	function PageIndex($map_count, $start) {
+	function PageIndex($count, $start)
+	{
 		$tmp = '<div class="btn-group">';
 		
-		for($i = 0; $i <= floor($map_count / MainSetting::MapOnPage); $i++) {
+		for($i = 0; $i <= floor($count / MainSetting::MapOnPage); $i++) {
 			$s = MainSetting::MapOnPage * $i;
 
 			if ($s == $start) {
