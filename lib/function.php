@@ -1,5 +1,5 @@
 <?php
-	require_once(dirname(__FILE__).'/config.php');
+	require_once(dirname(__FILE__) . '/config.php');
 	
 	function MySQL_PDO_Connect()
 	{
@@ -311,17 +311,15 @@
 
 	function Html_BodyFooter()
 	{
-		return 'ProKreedz Plus by <a href="//hoshinoa.me">k725</a> / Original Author by <a href="mailto:stiscorpion@gmail.com">+ScorpioN+</a> / AMXX Plugin by <a href="//forums.alliedmods.net/showthread.php?t=130417">nucLeaR</a>' . "\n";
+		return '<div id="footer">ProKreedz Plus by <a href="//hoshinoa.me">k725</a> / Original Author by <a href="mailto:stiscorpion@gmail.com">+ScorpioN+</a> / AMXX Plugin by <a href="//forums.alliedmods.net/showthread.php?t=130417">nucLeaR</a></div>' . "\n";
 	}
 
 	function menu($page, $value)
 	{
 		$tmp = '';
 
-		if ($page == 'pro15' || $page == 'all15')
-		{
-			$tmp .= $_GET['map'] . '<br>
-					WORLDRECORD: ' . $value;
+		if ($page == 'pro15' || $page == 'nub15') {
+			$tmp .= $_GET['map'];
 		}
 
 		$flag_1 = $page == 'home'    ? ' active' : '';
@@ -336,14 +334,19 @@
 							<a href="map.php" class="btn btn-default' . $flag_3 . '">Map statistic</a>
 							<a href="lastpro.php" class="btn btn-default' . $flag_4 . '">LastPro</a>
 						</div>
-					</div>' . "\n";
+					' . "\n";
 		
-		if ($page == 'all15' || $page == 'nub15' || $page == 'pro15')
-		{
-			$tmp .= '<a href="pro15.php?&map=' . $_GET['map'] . '">pro15</a>
-					<a href="nub15.php?&map=' . $_GET['map'] . '">nub15</a>
-					<a href="pronub15.php?&map=' . $_GET['map'] . '">pro15 & nub15</a>';
+		if ($page == 'nub15' || $page == 'pro15') {
+			$flag_5 = $page == 'pro15' ? ' active' : '';
+			$flag_6 = $page == 'nub15' ? ' active' : '';
+
+			$tmp .= '						<div class="btn-group">
+							<a href="pro15.php?&map=' . $_GET['map'] . '" class="btn btn-default' . $flag_5 . '">pro15</a>
+							<a href="nub15.php?&map=' . $_GET['map'] . '" class="btn btn-default' . $flag_6 . '">nub15</a>
+						</div>' . "\n";
 		}
+
+		$tmp .= '					</div>' . "\n";
 
 		return $tmp;
 	}

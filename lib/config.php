@@ -1,7 +1,6 @@
 <?php
 	class MainSetting {
 		const Language      = 'ja';
-		const MainPage      = 'http://example.com/';
 		const PageTitle     = 'ProKreedz Plus @ Japan';
 		const MapOnPage     = 15;
 		/* ----------------------------------------- */
@@ -26,8 +25,8 @@
 	class MySQL_Base {
 		const HostName      = 'localhost';
 		const UserName      = 'root';
-		const PassWord      = 'hoge';
-		const DataBase      = 'test';
+		const PassWord      = 'knight';
+		const DataBase      = 'cs_surf';
 		const Charset       = 'utf8mb4';
 		const RankNoob      = 'kz_nub15';
 		const RankPro       = 'kz_pro15';
@@ -53,6 +52,6 @@
 		const Date          = 'date';
 		const Weapon        = 'weapon';
 		const Server        = 'server';
-		const CheckPoitns   = 'checkpoints';
+		const CheckPoints   = 'checkpoints';
 		const GoCheck       = 'gocheck';
 	}

@@ -1,6 +1,6 @@
 <?php
-	require_once(dirname(__FILE__).'/lib/config.php');
-	require_once(dirname(__FILE__).'/lib/function.php');
+	require_once(dirname(__FILE__) . '/lib/config.php');
+	require_once(dirname(__FILE__) . '/lib/function.php');
 
 	function Html_Body()
 	{
@@ -12,37 +12,37 @@
 		}
 
 		for($i = 0; $i < count($maplist); $i++) {
-			$sth = $pdo->prepare('SELECT * FROM kz_pro15 WHERE mapname = :map ORDER BY time LIMIT 15');
+			$sth = $pdo->prepare('SELECT * FROM `' . MySQL_Base::RankPro . '` WHERE ' . MySQL_Column_Pro::MapName . ' = :map ORDER BY ' . MySQL_Column_Pro::Time . ' LIMIT 15');
 			$sth->bindValue(':map', $maplist[$i], PDO::PARAM_STR);
 			$sth->execute();
 
 			$num = 0;
 			while($id = $sth->fetch())
 			{
-				if (valid_steam($id['authid'])) {
+				if (valid_steam($id[MySQL_Column_Pro::AuthID])) {
 					$num++;
 
-					if (empty($player[$id['authid']])) {
-						$player[$id['authid']] = null;
+					if (empty($player[$id[MySQL_Column_Pro::AuthID]])) {
+						$player[$id[MySQL_Column_Pro::AuthID]] = null;
 					}
 
-					if (empty($player_info[$id['authid']]['records'])) {
-						$player_info[$id['authid']]['records'] = null;
+					if (empty($player_info[$id[MySQL_Column_Pro::AuthID]]['records'])) {
+						$player_info[$id[MySQL_Column_Pro::AuthID]]['records'] = null;
 					}
 
-					if (empty($player_info[$id['authid']]['prorecords'])) {
-						$player_info[$id['authid']]['prorecords'] = null;
+					if (empty($player_info[$id[MySQL_Column_Pro::AuthID]]['prorecords'])) {
+						$player_info[$id[MySQL_Column_Pro::AuthID]]['prorecords'] = null;
 					}
 
-					$player[$id['authid']]                 = $player[$id['authid']] + (16 - $num);
-					$player_info[$id['authid']]['name']    = $id['name'];
-					$player_info[$id['authid']]['country'] = $id['country'];
-					$player_info[$id['authid']]['name']    = $id['name'];
-					$player_info[$id['authid']]['authid']  = $id['authid'];
-					$player_info[$id['authid']]['records']++;
+					$player[$id[MySQL_Column_Pro::AuthID]]                 = $player[$id[MySQL_Column_Pro::AuthID]] + (16 - $num);
+					$player_info[$id[MySQL_Column_Pro::AuthID]]['name']    = $id['name'];
+					$player_info[$id[MySQL_Column_Pro::AuthID]]['country'] = $id['country'];
+					$player_info[$id[MySQL_Column_Pro::AuthID]]['name']    = h($id['name']);
+					$player_info[$id[MySQL_Column_Pro::AuthID]]['authid']  = $id['authid'];
+					$player_info[$id[MySQL_Column_Pro::AuthID]]['records']++;
 
 					if ($num == 1 ) {
-						$player_info[$id['authid']]['prorecords']++;
+						$player_info[$id[MySQL_Column_Pro::AuthID]]['prorecords']++;
 					}
 				}
 			}

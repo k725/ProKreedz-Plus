@@ -1,11 +1,11 @@
 <?php
-	require_once(dirname(__FILE__).'/lib/config.php');
-	require_once(dirname(__FILE__).'/lib/function.php');
+	require_once(dirname(__FILE__) . '/lib/config.php');
+	require_once(dirname(__FILE__) . '/lib/function.php');
 
 	function Html_Body()
 	{
 		$pdo  = new PDO(MySQL_PDO_Connect(), MySQL_Base::UserName, MySQL_Base::PassWord);
-		$sth  = $pdo->query('SELECT * FROM kz_pro15 ORDER BY date desc');
+		$sth  = $pdo->query('SELECT * FROM `' . MySQL_Base::RankPro . '` ORDER BY ' . MySQL_Column_Pro::Date . ' DESC');
 
 		$tmp  = menu('lastpro', null);
 		$tmp .= '					<table class="table table-condensed table-hover">
@@ -18,29 +18,29 @@
 				break;
 			}
 
-			$sth = $pdo->prepare('SELECT * FROM kz_pro15 WHERE mapname= :map ORDER BY time LIMIT 15');
-			$sth->bindValue(':map', $a['mapname'], PDO::PARAM_STR);
+			$sth = $pdo->prepare('SELECT * FROM `' . MySQL_Base::RankPro . '` WHERE ' . MySQL_Column_Pro::MapName . '= :map ORDER BY ' . MySQL_Column_Pro::Time . ' LIMIT 15');
+			$sth->bindValue(':map', $a[MySQL_Column_Pro::MapName], PDO::PARAM_STR);
 			$sth->execute();
 			
 			$num = 0;
 			while($id = $sth->fetch()) {
 				$num++;
-				if ($a['authid'] == $id['authid']) {
+				if ($a[MySQL_Column_Pro::AuthID] == $id[MySQL_Column_Pro::AuthID]) {
 					if ($num == 1 || $num == 2 || $num == 3) {
 						$rank = '<img src="./img/cups/'.$num.'.gif">';
 					} else {
 						$rank = $num;
 					}
 
-					$iMin      = floor(floor($a['time']) / 60);
-					$iSec      = $a['time'] - (60 * $iMin);
-					$r_mapname = $a['mapname'];
-					$r_flag    = strtolower(empty($a['country']) ? 'err' : $a['country']);
-					$r_authid  = $a['authid'];
-					$r_name    = h($a['name']);
-					$r_date    = $a['date'];
+					$iMin      = floor(floor($a[MySQL_Column_Pro::Time]) / 60);
+					$iSec      = $a[MySQL_Column_Pro::Time] - (60 * $iMin);
+					$r_mapname = $a[MySQL_Column_Pro::MapName];
+					$r_flag    = strtolower(empty($a[MySQL_Column_Pro::Country]) ? 'err' : $a[MySQL_Column_Pro::Country]);
+					$r_authid  = $a[MySQL_Column_Pro::AuthID];
+					$r_name    = h($a[MySQL_Column_Pro::Name]);
+					$r_date    = $a[MySQL_Column_Pro::Date];
 					$r_time    = sprintf('%02d:%s%.2f', $iMin, $iSec < 10 ? '0': '', $iSec);
-					$r_weapon  = $a['weapon'];
+					$r_weapon  = $a[MySQL_Column_Pro::Weapon];
 
 					$tmp .= '							<tr>
 								<td><a href="pro15.php?&map='. $r_mapname .'">'. $r_mapname .'</a></td>
@@ -59,7 +59,7 @@
 		$tmp .= '						</tbody>
 					</table>' . "\n";
 		$pdo  = null;
-		
+
 		return $tmp;
 	}
 ?>

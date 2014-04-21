@@ -34,21 +34,21 @@
 			if (isset($tab1[$ir])) {
 				$i++;
 
-				$sth = $pdo->prepare('SELECT * FROM `'.MySQL_Base::RankPro.'` WHERE mapname = :map ORDER BY time, name LIMIT 1');
+				$sth = $pdo->prepare('SELECT * FROM `' . MySQL_Base::RankPro . '` WHERE ' . MySQL_Column_Pro::MapName . ' = :map ORDER BY ' . MySQL_Column_Pro::Time . ', ' . MySQL_Column_Pro::Name . ' LIMIT 1');
 				$sth->bindValue(':map', $tab1[$ir], PDO::PARAM_STR);
 				$sth->execute();
 				$id = $sth->fetch();
 
 				if (count($id) > 0) {
-					$iMin      = floor(floor($id['time']) / 60);
-					$iSec      = $id['time'] - (60 * $iMin);
-					$r_mapname = $id['mapname'];
-					$r_flag    = strtolower(empty($id['country']) ? 'err' : $id['country']);
-					$r_authid  = $id['authid'];
-					$r_name    = h($id['name']);
+					$iMin      = floor(floor($id[MySQL_Column_Pro::Time]) / 60);
+					$iSec      = $id[MySQL_Column_Pro::Time] - (60 * $iMin);
+					$r_mapname = $id[MySQL_Column_Pro::MapName];
+					$r_flag    = strtolower(empty($id[MySQL_Column_Pro::Country]) ? 'err' : $id[MySQL_Column_Pro::Country]);
+					$r_authid  = $id[MySQL_Column_Pro::AuthID];
+					$r_name    = h($id[MySQL_Column_Pro::Name]);
 					$r_time    = sprintf('%02d:%s%.2f', $iMin, $iSec < 10 ? '0': '', $iSec);
-					$r_date    = $id['date'];
-					$r_weapon  = $id['weapon'];
+					$r_date    = $id[MySQL_Column_Pro::Date];
+					$r_weapon  = $id[MySQL_Column_Pro::Weapon];
 
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
@@ -61,20 +61,20 @@
 								<td><a href="nub15.php?map=' . $r_mapname . '">-link-</a></td>
 							</tr>' . "\n";
 				} else {
-					$sth = $pdo->prepare('SELECT * FROM `'.MySQL_Base::RankNoob.'` WHERE mapname = :map ORDER BY time, name LIMIT 1');
+					$sth = $pdo->prepare('SELECT * FROM `'.MySQL_Base::RankNoob.'` WHERE ' . MySQL_Column_Noob::MapName . ' = :map ORDER BY ' . MySQL_Column_Noob::Time . ', ' . MySQL_Column_Noob::Name . ' LIMIT 1');
 					$sth->bindValue(':map', $tab1[$ir], PDO::PARAM_STR);
 					$sth->execute();
 					$id = $sth->fetch();
 
-					$iMin      = floor(floor($id['time']) / 60);
-					$iSec      = $id['time'] - (60 * $iMin);
-					$r_mapname = $id['mapname'];
-					$r_flag    = strtolower(empty($id['country']) ? 'err' : $id['country']);
-					$r_authid  = $id['authid'];
-					$r_name    = $id['name'];
+					$iMin      = floor(floor($id[MySQL_Column_Noob::Time]) / 60);
+					$iSec      = $id[MySQL_Column_Noob::Time] - (60 * $iMin);
+					$r_mapname = $id[MySQL_Column_Noob::MapName];
+					$r_flag    = strtolower(empty($id[MySQL_Column_Noob::Country]) ? 'err' : $id[MySQL_Column_Noob::Country]);
+					$r_authid  = $id[MySQL_Column_Noob::AuthID];
+					$r_name    = $id[MySQL_Column_Noob::Name];
 					$r_time    = sprintf('%02d:%s%.2f', $iMin, $iSec < 10 ? '0': '', $iSec);
-					$r_date    = $id['date'];
-					$r_weapon  = $id['weapon'];
+					$r_date    = $id[MySQL_Column_Noob::Date];
+					$r_weapon  = $id[MySQL_Column_Noob::Weapon];
 
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
