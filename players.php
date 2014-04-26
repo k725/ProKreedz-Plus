@@ -5,7 +5,6 @@
 	function Html_Body()
 	{
 		$pdo = new PDO(MySQL_PDO_Connect(), MySQL_Base::UserName, MySQL_Base::PassWord);
-		$tmp = menu('players', null);
 
 		foreach ($pdo->query('SELECT DISTINCT ' . MySQL_Column_Pro::MapName . ' FROM ' . MySQL_Base::RankPro) as $row) {
 			$maplist[] = $row[MySQL_Column_Pro::MapName];
@@ -50,7 +49,7 @@
 
 		arsort($player);
 
-		$tmp .= '					<table class="table table-condensed table-hover">
+		$tmp = '					<table class="table table-condensed table-hover">
 						<thead><tr><th>#</th><th>Name</th><th>#1st</th><th>Record</th><th>Point</th><th>Country</th></tr></thead>
 						<tbody>' . "\n";
 
@@ -66,7 +65,7 @@
 				$num--;
 			} else {
 				if ($num == 1 || $num == 2 || $num == 3) {
-					$rank = '<img src="./img/cups/' . $num . '.gif">';
+					$rank = '<img src="' . MainSetting::CupImages . $num . '.gif">';
 				} else {
 					$rank = $num.':';
 				}
@@ -84,7 +83,7 @@
 								<td>' . $player_info[$sid]['prorecords'] . '</td>
 								<td>' . $player_info[$sid]['records'] . '</td>
 								<td>' . $player[$sid] . '</td>
-								<td><img src="./img/flags/' . $fshow . '.gif"> ' . country_eng($fshow) . '</td>
+								<td><img src="' . MainSetting::FlagImages . $fshow . '.gif"> ' . country_eng($fshow) . '</td>
 							</tr>' . "\n";
 
 			$point_back = $point;
@@ -103,7 +102,7 @@
 		<?php echo Html_Header() ?>
 	</head>
 	<body>
-		<?php echo Html_BodyHeader() ?>
+		<?php echo Html_BodyHeader('players') ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">

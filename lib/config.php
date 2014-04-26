@@ -2,31 +2,24 @@
 	class MainSetting {
 		const Language      = 'ja';
 		const PageTitle     = 'ProKreedz Plus @ Japan';
+		const Message       = '<p>Welcome!! powered by php and MySQL.</p>';
 		const MapOnPage     = 15;
 		/* ----------------------------------------- */
 		const BootStrapCSS  = '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css';
 		const BootStrapJS   = '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js';
 		const jQuery        = '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js';
 		const CSS           = './css/style.css';
-		/* ----------------------------------------- */
-		static function Server() {
-			$item['01'] = '192.168.0.3:27014';
-			$item['02'] = '127.0.0.1:27015';
-			$item['03'] = '127.0.0.1:27016';
-			$item['04'] = '127.0.0.1:27017';
-			$item['05'] = '127.0.0.1:27018';
-			$item['06'] = '127.0.0.1:27019';
-			// L ServerSample
-			// $item['03~'] = 'Address:Port';
-			return $item;
-		}
+		const CupImages     = './img/cups/';
+		const FlagImages    = './img/flags/';
+		const WeaponImages  = './img/weapons/?w=';
+		const SteamError    = './img/noneavatar.jpg';
 	}
 
 	class MySQL_Base {
 		const HostName      = 'localhost';
 		const UserName      = 'root';
-		const PassWord      = 'knight';
-		const DataBase      = 'cs_surf';
+		const PassWord      = 'testpw';
+		const DataBase      = 'testdb';
 		const Charset       = 'utf8mb4';
 		const RankNoob      = 'kz_nub15';
 		const RankPro       = 'kz_pro15';

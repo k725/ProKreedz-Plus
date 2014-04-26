@@ -22,8 +22,8 @@
 		|| $authid == 'VALVE_ID_LAN'
 		|| $authid == 'VALVE_ID_PENDING'
 		|| $authid == 'STEAM_ID_PENDING'
-		|| $authid == '') return 0;
-		else return 1;
+		|| $authid == '') return false;
+		else return true;
 	}
 
 	function country_eng($short)
@@ -287,6 +287,7 @@
 	{
 		return '<meta charset="UTF-8">
 		<meta name="robots" content="noindex,nofollow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="' . MainSetting::BootStrapCSS . '">
 		<link rel="stylesheet" href="' . MainSetting::CSS . '">
 		<title>' . MainSetting::PageTitle . '</title>' . "\n";
@@ -298,13 +299,31 @@
 		<script src="' . MainSetting::BootStrapJS . '"></script>' . "\n";
 	}
 
-	function Html_BodyHeader()
+	function Html_BodyHeader($page)
 	{
+		$flag_1 = $page == 'players' ? ' class="active"' : '';
+		$flag_2 = $page == 'map'     ? ' class="active"' : '';
+		$flag_3 = $page == 'lastpro' ? ' class="active"' : '';
+
 		return '<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand navbar-brand_fix mfont" href="./">ProKreedz Plus</a>
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand navbar-brand_fix mfont" href="./">' . MainSetting::PageTitle . '</a>
 				</div>
+
+				<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+					<ul class="nav navbar-nav">
+						<li' . $flag_1 . '><a href="./players.php">Player Static</a></li>
+						<li' . $flag_2 . '><a href="./map.php">Map Static</a></li>
+						<li' . $flag_3 . '><a href="./lastpro.php">Last Pro</a></li>
+					</ul>
+				</nav>
 			</div>
 		</header>' . "\n";
 	}
@@ -317,36 +336,19 @@
 	function menu($page, $value)
 	{
 		$tmp = '';
-
-		if ($page == 'pro15' || $page == 'nub15') {
-			$tmp .= $_GET['map'];
-		}
-
-		$flag_1 = $page == 'home'    ? ' active' : '';
-		$flag_2 = $page == 'players' ? ' active' : '';
-		$flag_3 = $page == 'map'     ? ' active' : '';
-		$flag_4 = $page == 'lastpro' ? ' active' : '';
-		
-		$tmp .='<div style="text-align: right;">
-						<div class="btn-group">
-							<a href="./" class="btn btn-default' . $flag_1 . '">Home</a>
-							<a href="players.php" class="btn btn-default' . $flag_2 . '">Player statistic</a>
-							<a href="map.php" class="btn btn-default' . $flag_3 . '">Map statistic</a>
-							<a href="lastpro.php" class="btn btn-default' . $flag_4 . '">LastPro</a>
-						</div>
-					' . "\n";
 		
 		if ($page == 'nub15' || $page == 'pro15') {
-			$flag_5 = $page == 'pro15' ? ' active' : '';
-			$flag_6 = $page == 'nub15' ? ' active' : '';
+			$flag_1 = $page == 'pro15' ? ' active' : '';
+			$flag_2 = $page == 'nub15' ? ' active' : '';
 
-			$tmp .= '						<div class="btn-group">
-							<a href="pro15.php?&map=' . $_GET['map'] . '" class="btn btn-default' . $flag_5 . '">pro15</a>
-							<a href="nub15.php?&map=' . $_GET['map'] . '" class="btn btn-default' . $flag_6 . '">nub15</a>
-						</div>' . "\n";
+			$tmp .= '<strong>' . $value . '</strong>
+					<div style="text-align:right;">
+						<div class="btn-group">
+							<a href="pro15.php?&map=' . $value . '" class="btn btn-default' . $flag_1 . '">pro15</a>
+							<a href="nub15.php?&map=' . $value . '" class="btn btn-default' . $flag_2 . '">nub15</a>
+						</div>
+					</div>' . "\n";
 		}
-
-		$tmp .= '					</div>' . "\n";
 
 		return $tmp;
 	}

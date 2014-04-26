@@ -23,8 +23,7 @@
 		
 		sort($tab1);
 
-		$tmp = menu('map', null);
-		$tmp .= '					<table class="table table-condensed table-hover">
+		$tmp = '					<table class="table table-condensed table-hover">
 						<thead><tr><th>#</th><th>Maps</th><th>Name</th><th>Time</th><th>Date</th><th>Weapon</th><th>Pro15</th><th>Nub15</th></tr></thead>
 						<tbody>' . "\n";
 
@@ -52,11 +51,11 @@
 
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
-								<td><a href="pronub15.php?&map=' . $r_mapname . '">' . $r_mapname . '</a></td>
-								<td><img src="./img/flags/' . $r_flag . '.gif"> <a href="player.php?authid=' . $r_authid . '">' . $r_name . '</a></td>
+								<td>' . $r_mapname . '</td>
+								<td><img src="' . MainSetting::FlagImages . $r_flag . '.gif"> <a href="player.php?authid=' . $r_authid . '">' . $r_name . '</a></td>
 								<td>' . $r_time . '</td>
 								<td>' . $r_date . '</td>
-								<td><img src="./img/weapons/' . $r_weapon . '.gif"></td>
+								<td><img src="' . MainSetting::WeaponImages . $r_weapon . '"></td>
 								<td><a href="pro15.php?&map=' . $r_mapname . '">-link-</a></td>
 								<td><a href="nub15.php?map=' . $r_mapname . '">-link-</a></td>
 							</tr>' . "\n";
@@ -79,10 +78,10 @@
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
 								<td><a href="pronub15.php?&map=' . $r_mapname . '">' . $r_mapname . '</a></td>
-								<td><img src="./img/flags/' . $r_flag . '.gif"><a href="player.php?authid=' . $r_authid . '">' . h($r_name) . '</a> [ NOOB RECORD ]</td>
+								<td><img src="' . MainSetting::FlagImages . $r_flag . '.gif"><a href="player.php?authid=' . $r_authid . '">' . h($r_name) . '</a> [ NOOB RECORD ]</td>
 								<td>' . $r_time . '</td>
 								<td>' . $r_date . '</td>
-								<td><img src="./img/weapons/' . $r_weapon . '.gif"></td>
+								<td><img src="' . MainSetting::WeaponImages . $r_weapon . '"></td>
 								<td><a href="pro15.php?&map=' . $r_mapname . '">-link-</a></td>
 								<td><a href="nub15.php?map=' . $r_mapname . '">-link-</a></td>
 							</tr>' . "\n";
@@ -100,7 +99,7 @@
 
 	function PageIndex($count, $start)
 	{
-		$tmp = '<div class="btn-group">';
+		$tmp = '<div id="pageindex"><div class="btn-group">';
 		
 		for($i = 0; $i <= floor($count / MainSetting::MapOnPage); $i++) {
 			$s = MainSetting::MapOnPage * $i;
@@ -112,7 +111,7 @@
 			}
 		}
 
-		$tmp .='</div>' . "\n";
+		$tmp .='</div></div>' . "\n";
 
 		return $tmp;
 	}
@@ -123,7 +122,7 @@
 		<?php echo Html_Header() ?>
 	</head>
 	<body>
-		<?php echo Html_BodyHeader() ?>
+		<?php echo Html_BodyHeader('map') ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">

@@ -7,8 +7,7 @@
 		$pdo  = new PDO(MySQL_PDO_Connect(), MySQL_Base::UserName, MySQL_Base::PassWord);
 		$sth  = $pdo->query('SELECT * FROM `' . MySQL_Base::RankPro . '` ORDER BY ' . MySQL_Column_Pro::Date . ' DESC');
 
-		$tmp  = menu('lastpro', null);
-		$tmp .= '					<table class="table table-condensed table-hover">
+		$tmp = '					<table class="table table-condensed table-hover">
 						<thead><tr><th>Maps</th><th>#</th><th>Name</th><th>Time</th><th>Date</th><th>Weapon</th><th>Pro15</th><th>Nub15</th></tr></thead>
 						<tbody>' . "\n";
 
@@ -27,7 +26,7 @@
 				$num++;
 				if ($a[MySQL_Column_Pro::AuthID] == $id[MySQL_Column_Pro::AuthID]) {
 					if ($num == 1 || $num == 2 || $num == 3) {
-						$rank = '<img src="./img/cups/'.$num.'.gif">';
+						$rank = '<img src="' . MainSetting::CupImages . $num . '.gif">';
 					} else {
 						$rank = $num;
 					}
@@ -43,12 +42,12 @@
 					$r_weapon  = $a[MySQL_Column_Pro::Weapon];
 
 					$tmp .= '							<tr>
-								<td><a href="pro15.php?&map='. $r_mapname .'">'. $r_mapname .'</a></td>
+								<td>'. $r_mapname .'</td>
 								<td>'.$rank.'</td>
-								<td><img src="./img/flags/' . $r_flag . '.gif"><a href="player.php?authid=' . $r_authid . '"> ' . $r_name . '</a></td>
+								<td><img src="' . MainSetting::FlagImages . $r_flag . '.gif"><a href="player.php?authid=' . $r_authid . '"> ' . $r_name . '</a></td>
 								<td>' . $r_time . '</td>
 								<td>' . $r_date . '</td>
-								<td><img src="./img/weapons/' . $r_weapon . '.gif"></td>
+								<td><img src="' . MainSetting::WeaponImages . $r_weapon . '"></td>
 								<td><a href="pro15.php?&map=' . $r_mapname . '">-link-</a></td>
 								<td><a href="nub15.php?map=' . $r_mapname . '">-link-</a></td>
 							</tr>' . "\n";
@@ -69,7 +68,7 @@
 		<?php echo Html_Header() ?>
 	</head>
 	<body>
-		<?php echo Html_BodyHeader() ?>
+		<?php echo Html_BodyHeader('lastpro') ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">

@@ -5,7 +5,7 @@
 	function Html_Body()
 	{
 		$pdo = new PDO(MySQL_PDO_Connect(), MySQL_Base::UserName, MySQL_Base::PassWord);
-		$tmp = menu('pro15', null);
+		$tmp = menu('pro15', h($_GET['map']));
 
 		if(!empty($_GET['map'])) {
 			$tmp .= '					<table class="table table-condensed table-hover">
@@ -21,7 +21,7 @@
 				$i++;
 
 				if ($i == 1 OR $i == 2 OR $i == 3) {
-					$r_rank = '<img src="./img/cups/' . $i . '.gif">';
+					$r_rank = '<img src="' . MainSetting::CupImages . $i . '.gif">';
 				} else {
 					$r_rank = $i;
 				}
@@ -37,11 +37,11 @@
 
 				$tmp .= '							<tr>
 								<td>' . $r_rank . '</td>
-								<td><img src="./img/flags/' . $r_flag . '.gif"> <a href="player.php?authid=' . $r_authid . '">' . $r_name . '</a></td>
+								<td><img src="' . MainSetting::FlagImages . $r_flag . '.gif"> <a href="player.php?authid=' . $r_authid . '">' . $r_name . '</a></td>
 								<td>' . $r_authid . '</td>
 								<td>' . $r_time . '</td>
 								<td>' . $r_date . '</td>
-								<td><img src="./img/weapons/' . $r_weapon . '.gif"></td>
+								<td><img src="' . MainSetting::WeaponImages . $r_weapon . '"></td>
 							</tr>' . "\n";
 			}
 			
@@ -60,7 +60,7 @@
 		<?php echo Html_Header() ?>
 	</head>
 	<body>
-		<?php echo Html_BodyHeader() ?>
+		<?php echo Html_BodyHeader(null) ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
