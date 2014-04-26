@@ -1,6 +1,6 @@
 <?php
 	class MainSetting {
-		const Language      = 'ja';
+		const Language      = 'en-us'; // <html lang="en-us">
 		const PageTitle     = 'ProKreedz Plus @ Japan';
 		const Message       = '<p>Welcome!! powered by php and MySQL.</p>';
 		const MapOnPage     = 15;
