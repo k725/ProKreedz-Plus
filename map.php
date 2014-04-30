@@ -37,8 +37,9 @@
 				$sth->bindValue(':map', $tab1[$ir], PDO::PARAM_STR);
 				$sth->execute();
 				$id = $sth->fetch();
+				$idnum = $sth->rowCount();
 
-				if (count($id) > 0) {
+				if ($idnum > 0)  {
 					$iMin      = floor(floor($id[MySQL_Column_Pro::Time]) / 60);
 					$iSec      = $id[MySQL_Column_Pro::Time] - (60 * $iMin);
 					$r_mapname = $id[MySQL_Column_Pro::MapName];
@@ -60,11 +61,12 @@
 								<td><a href="nub15.php?map=' . $r_mapname . '">-link-</a></td>
 							</tr>' . "\n";
 				} else {
-					$sth = $pdo->prepare('SELECT * FROM `'.MySQL_Base::RankNoob.'` WHERE ' . MySQL_Column_Noob::MapName . ' = :map ORDER BY ' . MySQL_Column_Noob::Time . ', ' . MySQL_Column_Noob::Name . ' LIMIT 1');
+					$sth = $pdo->prepare('SELECT * FROM `' . MySQL_Base::RankNoob . '` WHERE ' . MySQL_Column_Noob::MapName . ' = :map ORDER BY ' . MySQL_Column_Noob::Time . ', ' . MySQL_Column_Noob::Name . ' LIMIT 1');
 					$sth->bindValue(':map', $tab1[$ir], PDO::PARAM_STR);
 					$sth->execute();
 					$id = $sth->fetch();
 
+					$idnum = $sth->rowCount();
 					$iMin      = floor(floor($id[MySQL_Column_Noob::Time]) / 60);
 					$iSec      = $id[MySQL_Column_Noob::Time] - (60 * $iMin);
 					$r_mapname = $id[MySQL_Column_Noob::MapName];
@@ -77,7 +79,7 @@
 
 					$tmp .= '							<tr>
 								<td>' . ($start + $i) . '</td>
-								<td><a href="pronub15.php?&map=' . $r_mapname . '">' . $r_mapname . '</a></td>
+								<td>' . $r_mapname . '</td>
 								<td><img src="' . MainSetting::FlagImages . $r_flag . '.gif"><a href="player.php?authid=' . $r_authid . '">' . h($r_name) . '</a> [ NOOB RECORD ]</td>
 								<td>' . $r_time . '</td>
 								<td>' . $r_date . '</td>
